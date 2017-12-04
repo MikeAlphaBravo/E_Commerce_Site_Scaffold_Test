@@ -24,17 +24,11 @@ class OrderItemsController < ApplicationController
   # POST /order_items
   # POST /order_items.json
   def create
-    @order_item = OrderItem.new(order_item_params)
-
-    respond_to do |format|
-      if @order_item.save
-        format.html { redirect_to @order_item, notice: 'Order item was successfully created.' }
-        format.json { render :show, status: :created, location: @order_item }
-      else
-        format.html { render :new }
-        format.json { render json: @order_item.errors, status: :unprocessable_entity }
-      end
-    end
+    @order = current_order
+    @item = @order.order_items.new(item_params)
+    @order.save
+    session[:order_id] = @order.id
+    redirect_to products_path
   end
 
   # PATCH/PUT /order_items/1
@@ -68,7 +62,7 @@ class OrderItemsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def order_item_params
-      params.require(:order_item).permit(:qauntity, :product_id, :order_id)
+    def item_params
+      params.require(:order_item).permit(:qauntity, :product_id)
     end
 end

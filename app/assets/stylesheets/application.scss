@@ -13,3 +13,16 @@
  *= require_tree .
  *= require_self
  */
+ @import "bootstrap";
+
+.alert {
+  height: 100px;
+  width: 400px;
+}
+
+.float-right {
+  text-align: right;
+}
+.col-md-3 {
+  margin: auto;
+}
